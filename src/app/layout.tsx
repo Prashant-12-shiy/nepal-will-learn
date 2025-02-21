@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+import { Poppins, Great_Vibes } from "next/font/google"; // Import Poppins and Great_Vibes
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "@/context/query-provider";
+
+// Configure Poppins
+const poppins = Poppins({
+  weight: "400", // Regular weight
+  subsets: ["latin"],
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+// Configure Great Vibes
+const greatVibes = Great_Vibes({
+  weight: "400",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -25,10 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={poppins.className}>
+        <QueryProvider>
+          <Toaster position="top-right"/>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
