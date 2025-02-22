@@ -2,24 +2,22 @@ import axios from "axios";
 import { BASE_URL } from "./auth-endpoint";
 
 import { endpoints } from "./auth-endpoint";
-import { LoginData } from "../types";
+import { RegisterData } from "../types";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const login = async (data: LoginData) => {
+const register = async (data: RegisterData) => {
   try {
-    const response = await axios.post(BASE_URL + endpoints.login, data, {
-      withCredentials: true, 
-    });
+    const response = await axios.post(BASE_URL + endpoints.register, data);
 
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage =
-        error.response?.data?.message || "Login failed";
+        error.response?.data?.message || "Registration failed";
       const statusCode = error.response?.status;
 
-      console.error("Login error:", errorMessage, statusCode);
+      console.error("Registration error:", errorMessage, statusCode);
 
       throw {
         message: errorMessage,
@@ -27,17 +25,17 @@ const login = async (data: LoginData) => {
       };
     } else {
       // Handle non-Axios errors (e.g., network errors)
-      console.error("Unexpected error during login:", error);
+      console.error("Unexpected error during registration:", error);
       throw { message: "An unexpected error occurred" };
     }
   }
 };
 
-export const useLogin = () => {
+export const useRegister = () => {
   const mutation = useMutation({
-    mutationFn: login,
+    mutationFn: register,
     onSuccess: () => {
-      toast.success("Logged In");
+      toast.success("Verification Token has been send to your email");
     },
     onError: (error) => {
       toast.error(error.message);

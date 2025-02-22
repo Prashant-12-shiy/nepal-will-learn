@@ -1,59 +1,63 @@
 "use client";
-
-import { z } from "zod";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
-import { useLogin } from "@/features/auth/api/use-sign-in";
-
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../../../components/ui/card";
+import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { useRegister } from "../api/use-sign-up";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {z} from "zod";
+import { signUpSchema } from "../schemas";
+import { RegisterData } from "../types";
 
-import { logInSchema } from "../schemas";
-import { LoginData } from "../types";
-import { useGoogleLogin } from "../api/oauth-login";
+export const SignUpCard = () => {
+  const router = useRouter();
+  const {mutate, isPending} = useRegister();
 
-export const SignInCard = () => {
-  const { mutate, isPending } = useLogin();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<z.infer<typeof logInSchema>>({
-    resolver: zodResolver(logInSchema),
+  const {register, handleSubmit, formState: {errors}} = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: LoginData) => {
-    mutate(data);
-  };
-
-  const loginWithGoogle = useGoogleLogin();
+  const onSubmit = (data: RegisterData) => {
+    mutate(data, {
+      onSuccess: () => {
+        router.push("/verify-email");
+      }
+    });
+  }
 
   return (
     <Card className="w-full h-full md:w-[487px] shadow-none m-auto border-none lg:border rounded-md">
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-center tracking-wider">
-          LogIn
+          SignUp
         </CardTitle>
-        <CardDescription className="text-center text-lg">
-          Welcome Back
+        <CardDescription className="text-neutral-500 text-sm">
+          By signing up, you agree to our{" "}
+          <Link href="/privacy">
+            <span className="text-blue-700">Privary Policy </span>
+          </Link>
+          and{" "}
+          <Link href="/terms">
+            <span className="text-blue-700">Terms of Service</span>
+          </Link>
         </CardDescription>
       </CardHeader>
       <div className="mx-7">
@@ -62,6 +66,19 @@ export const SignInCard = () => {
       <CardContent>
         <form className="*:py-2" onSubmit={handleSubmit(onSubmit)}>
           <div>
+            <Label>Name:</Label>
+            <Input
+              type="text"
+              disabled={false}
+              placeholder="Enter you Username"
+              {...register("name")}
+            />
+             {errors.name && (
+              <p className="text-sm text-red-500">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div>
             <Label>Email:</Label>
             <Input
               type="email"
@@ -69,7 +86,7 @@ export const SignInCard = () => {
               placeholder="Enter you Email Address"
               {...register("email")}
             />
-            {errors.email && (
+             {errors.email && (
               <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
@@ -82,29 +99,27 @@ export const SignInCard = () => {
               placeholder="Enter your Password"
               {...register("password")}
             />
-            {errors.password && (
+             {errors.password && (
               <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
 
+
           <Button type="submit" disabled={isPending} className="lg:w-full mt-4">
-            {isPending ? "Loging..." : "Login"}
+            {isPending ? "Registering..." : "Register"}
           </Button>
         </form>
-        <p className="underline text-end text-blue-400 text-xs my-3">
-            <Link href="/forgot-password"> forget password?</Link>
-        </p>
         <Separator className="my-5" />
         <div className="*:mb-4">
           <Button
-            onClick={loginWithGoogle}
+            onClick={() => {}}
             variant="secondary"
             disabled={false}
             size="lg"
             className="w-full"
           >
             <FcGoogle className="mr-2 size-5" />
-            Login with Google
+            SignUp with Google
           </Button>
 
           <Button
@@ -115,7 +130,7 @@ export const SignInCard = () => {
             className="w-full"
           >
             <FaFacebook className="mr-2 size-5" />
-            Login with Facebook
+            SignUp with Facebook
           </Button>
         </div>
       </CardContent>
@@ -123,9 +138,9 @@ export const SignInCard = () => {
         <Separator />
       </div>
       <CardContent className="p-4 flex items-center justify-center">
-        <p>Don't Have an Account?</p>
-        <Link href="/sign-up">
-          <span className="text-blue-700">&nbsp;Sign Up</span>
+        <p>Already Have an Account?</p>
+        <Link href="/log-in">
+          <span className="text-blue-700">&nbsp;Sign In</span>
         </Link>
       </CardContent>
     </Card>
