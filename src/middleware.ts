@@ -1,31 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-    const token = req.cookies.get('nwl-token')?.value;
-    const {pathname} = req.nextUrl;
+  const token = req.cookies.get("nwl-token")?.value;
+  const adminToken = req.cookies.get("nwl-admin-token")?.value;
+  const { pathname } = req.nextUrl;
 
-    const authPages = ["/log-in", "/sign-up", "/forgot-password", "/verify-email", pathname.startsWith("/reset-password")];
+  const authPages = [
+    "/log-in",
+    "/sign-up",
+    "/forgot-password",
+    "/verify-email",
+    pathname.startsWith("/reset-password"),
+  ];
 
-    if (token && authPages.includes(pathname)) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
-    
+  if (token && authPages.includes(pathname)) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 
-      if (!token && pathname.startsWith("/user")) {
-        return NextResponse.redirect(new URL("/log-in", req.url));
-      }
-  
+  if (pathname.startsWith("/admin")) {
+    if (!adminToken) {
+      // Redirect to admin login if no admin token is found
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  }
 
-    return NextResponse.next();
+
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher: [
-      "/user/:path*", // Protect all dashboard routes
-      "/reset-password/:path*", 
-      "/log-in", 
-      "/sign-up", 
-      "/forgot-password", 
-      "/verify-email", 
-    ],
-  };
+  matcher: [
+    "/reset-password/:path*",
+    "/log-in",
+    "/sign-up",
+    "/forgot-password",
+    "/verify-email",
+    "/admin/:path*",
+  ],
+};

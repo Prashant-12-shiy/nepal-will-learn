@@ -30,7 +30,7 @@ const VerifyEmail = () => {
     };
     mutate(data, {
       onSuccess: () => {
-        router.push('/dashboard');
+        router.push('/');
       }
     });
   };

@@ -14,7 +14,6 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Get the token from cookies
     const token = getCookie("nwl-token");
-    console.log("Token from cookie:", token);
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
