@@ -129,7 +129,7 @@ export const SignInCard = () => {
         <Separator />
       </div>
       <CardContent className="p-4 flex items-center justify-center">
-        <p>Don't Have an Account?</p>
+        <p>Don&apos;t Have an Account?</p>
         <Link href="/sign-up">
           <span className="text-blue-700">&nbsp;Sign Up</span>
         </Link>

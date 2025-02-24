@@ -1,17 +1,23 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 import {
   ExternalLinkIcon,
   MoreVertical,
   TrashIcon,
   PencilIcon,
 } from "lucide-react";
-import { useState } from "react";
+
 import { useConfirm } from "@/hooks/use-confirm";
+
+import { ResponsiveModel } from "@/components/responsive-model";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { EditUniversityFormWrapper } from "./edit-university-form-wrapper";
+import { useDeleteUniversity } from "../api/use-delete-university";
 
 
 interface CollegeActionProps {
@@ -21,10 +27,10 @@ interface CollegeActionProps {
 export const UniversityAction = ({ id }: CollegeActionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // const {mutate, isPending} = useDeleteCollege();
+  const {mutate, isPending} = useDeleteUniversity();
 
   const [ConfirmationDialog, confirm] = useConfirm(
-    "Delete College",
+    "Delete University",
     "Are you sure you want to delete this university?",
     "destructive"
   );
@@ -33,7 +39,7 @@ export const UniversityAction = ({ id }: CollegeActionProps) => {
     const ok = await confirm();
     if(!ok) return;
 
-    // mutate(id);
+    mutate(id);
   }
 
   return (
@@ -57,7 +63,7 @@ export const UniversityAction = ({ id }: CollegeActionProps) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleDelete}
-            disabled={false}
+            disabled={isPending}
             className="text-amber-700 focus:text-amber-700 font-medium p-[10px] hover:bg-red-700"
           >
             <TrashIcon className="size-4 mr-2 stroke-2" />
@@ -67,9 +73,9 @@ export const UniversityAction = ({ id }: CollegeActionProps) => {
       </DropdownMenu>
 
       {/* Wrap inside ResponsiveModel */}
-      {/* <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen}>
-        <EditCollegeFormWrapper id={id} isOpen={isOpen} setIsOpen={setIsOpen} />
-      </ResponsiveModel> */}
+      <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen}>
+        <EditUniversityFormWrapper id={id} setIsOpen={setIsOpen} />
+      </ResponsiveModel>
 
       <ConfirmationDialog/>
     </>

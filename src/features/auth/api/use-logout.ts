@@ -17,7 +17,7 @@ export const useLogout = () => {
       // Show a success toast
       toast.success("Logged out successfully");
 
-    } catch (error) {
+    } catch {
       toast.error("Failed to log out");
     }
   };

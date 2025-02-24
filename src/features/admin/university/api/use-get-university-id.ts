@@ -3,9 +3,9 @@ import { endpoints } from "@/lib/endpoint";
 import { handleAxiosError } from "@/lib/handleAxiosError"
 import { useQuery } from "@tanstack/react-query";
 
-const getCollegeBySlug = async(slug: string) => {
+const getUniversityById = async(id: string) => {
     try {
-        const response = await axiosInstance.get(endpoints.getCollegeBySlug + slug);
+        const response = await axiosInstance.get(endpoints.getUniversityById + id);
         
 
         return response.data;
@@ -15,10 +15,10 @@ const getCollegeBySlug = async(slug: string) => {
     }
 }
 
-export const useGetCollegeBySlug = (slug: string) => {
+export const useGetUniversityById = (id: string) => {
     return useQuery({
-        queryKey: ["colleges", slug],
-        queryFn: () => getCollegeBySlug(slug),
+        queryKey: ["university", id],
+        queryFn: () => getUniversityById(id),
         retry: 1,
         staleTime: 1000 * 60 * 5 // 5 minutes,
     })

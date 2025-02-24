@@ -16,13 +16,14 @@ export const endpoints = {
 
     createCollege: '/api/nwl/admin/create-college',
     getColleges: '/api/nwl/admin/get-colleges',
-    getCollegeById: '/api/nwl/admin/get-college/',
+    getCollegeBySlug: '/api/nwl/admin/get-college/',
     updateCollege: '/api/nwl/admin/update-college/',
     deleteCollege: '/api/nwl/admin/delete-college/',
 
     createUniversity: '/api/nwl/admin/create-university',
     getUniversities: '/api/nwl/admin/get-universities',
     getUniversityById: '/api/nwl/admin/get-university/',
+    getUniversityBySlug: '/api/nwl/admin/get-unversity/',
     updateUniversity: '/api/nwl/admin/update-university/',
     deleteUniversity: '/api/nwl/admin/delete-university/',
 }

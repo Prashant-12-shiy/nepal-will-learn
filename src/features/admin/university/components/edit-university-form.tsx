@@ -20,71 +20,64 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { formSchema } from "./create-college-form";
-import { CollegeData } from "../types";
-import { useUdpateCollege } from "../api/use-update-college";
-import { UniversityData } from "../../university/types";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+import { universityFormSchema } from "./create-university-form";
+// import { PageLoader } from "@/components/page-loader";
+import { useUdpateUniversity } from "../api/use-update-university";
+import { UniversityData } from "../types";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+// import { cn } from "@/lib/utils";
+// import { Check, ChevronsUpDown } from "lucide-react";
+// import {
+//   Command,
+//   CommandEmpty,
+//   CommandGroup,
+//   CommandInput,
+//   CommandItem,
+//   CommandList,
+// } from "@/components/ui/command";
 
-interface EditCollegeFormProps {
-  universities: UniversityData[];
-  initialValues: CollegeData;
+interface EditUniversityFormProps {
+  initialValues: UniversityData;
   onCancel: () => void;
 }
 
-export const EditCollegeForm = ({
-  universities,
+export const EditUniversityForm = ({
   initialValues,
   onCancel,
-}: EditCollegeFormProps) => {
-  const collegeId = initialValues._id ?? " ";
-
-  console.log(universities);
+}: EditUniversityFormProps) => {
+  const universityId = initialValues._id ?? " ";
 
   // Initialize the form
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      ...initialValues,
-      affiliation: initialValues.affiliation._id,
-    },
+  const form = useForm<z.infer<typeof universityFormSchema>>({
+    resolver: zodResolver(universityFormSchema),
+    defaultValues: initialValues
   });
 
-  const { mutate, isPending, reset } = useUdpateCollege();
+  const { mutate, isPending, reset } = useUdpateUniversity();
 
 
   // Handle form submission
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const selectedUniversity = universities.find(
-      (university) => university._id === values.affiliation
-    );
+  const onSubmit = (values: z.infer<typeof universityFormSchema>) => {
+    // const selectedUniversity = universities.find(
+    //   (university) => university._id === values.affiliation
+    // );
 
-    if (!selectedUniversity) {
-      console.error("Selected university not found");
-      return;
-    }
+    // if (!selectedUniversity) {
+    //   console.error("Selected university not found");
+    //   return;
+    // }
 
-    const updatedValues: CollegeData = {
-      ...values,
-      affiliation: selectedUniversity, // Transform back to UniversityData
-    };
+    // const updatedValues: CollegeData = {
+    //   ...values,
+    //   affiliation: selectedUniversity, // Transform back to UniversityData
+    // };
   
     mutate(
-      { data: updatedValues, id: collegeId },
+      { data: values, id: universityId },
       {
         onSuccess: () => {
           reset();
@@ -258,7 +251,7 @@ export const EditCollegeForm = ({
             />
 
             {/* Affiliation */}
-            <FormField
+            {/* <FormField
               control={form.control}
               name="affiliation"
               render={({ field }) => (
@@ -320,7 +313,7 @@ export const EditCollegeForm = ({
                   </Popover>
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
 
           <div className="flex flex-col sm:flex-row  gap-5 *:w-full">

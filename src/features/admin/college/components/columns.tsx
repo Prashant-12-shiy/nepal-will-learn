@@ -110,16 +110,17 @@ export const columns: ColumnDef<CollegeData>[] = [
     header: "Affiliation",
     cell: ({ row }) => {
       const affiliation = row.original.affiliation;
-      return <p>{affiliation}</p>;
+      return <p>{affiliation?.name}</p>;
     },
   },
   {
     id: "actions",
     cell: ({row}) => {
       const id = row.original._id;
-
+      const slug = row.original.slug;
+      
       return (
-        <CollegeAction id={id ?? ""}/>
+        <CollegeAction id={id ?? ""} collegeSlug={slug ?? ""}/>
       )
     }
   }

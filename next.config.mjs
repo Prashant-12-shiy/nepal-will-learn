@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ["lh3.googleusercontent.com"], // Add the domain here
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*", // Allow images from all domains
       },
+    ],
+  },
 };
 
 export default nextConfig;

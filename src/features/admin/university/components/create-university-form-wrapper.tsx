@@ -8,12 +8,10 @@ import {
 import { CreateUniversityForm } from "./create-university-form";
 
 interface CreateUniversityFormWrapperProps {
-  isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
 export const CreateUniversityFormWrapper = ({
-  isOpen,
   setIsOpen,
 }: CreateUniversityFormWrapperProps) => {
   return (

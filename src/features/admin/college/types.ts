@@ -1,6 +1,9 @@
+import { UniversityData } from "../university/types";
+
 export interface CollegeData {
     _id?: string;
     name: string;
+    slug?: string;
     location: string;
     establishedYear: number;
     courses: string[];
@@ -9,7 +12,7 @@ export interface CollegeData {
     phone?: string;
     website?: string;
     accreditation?: string;
-    affiliation: string;
+    affiliation: UniversityData;
     totalStudents?: number;
     totalFaculty?: number;
     campusArea?: number;

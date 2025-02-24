@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Great_Vibes } from "next/font/google"; // Import Poppins and Great_Vibes
+import { Poppins } from "next/font/google"; // Import Poppins and Great_Vibes
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
@@ -11,11 +11,6 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-// Configure Great Vibes
-const greatVibes = Great_Vibes({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",

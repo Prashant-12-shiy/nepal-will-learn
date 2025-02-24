@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -69,7 +68,6 @@ interface CreateUniversityFormProps {
 }
 
 export const CreateUniversityForm = ({onCancel}: CreateUniversityFormProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   // Initialize the form
   const form = useForm<z.infer<typeof universityFormSchema>>({
     resolver: zodResolver(universityFormSchema),

@@ -22,6 +22,6 @@ export interface UniversityData {
     libraries?: number; // Optional
     labs?: number; // Optional
     hostels?: number;
-    colleges?: Object[];
+    colleges?: object[];
   }
   

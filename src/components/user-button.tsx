@@ -10,6 +10,7 @@ import { useLogout } from "@/features/auth/api/use-logout";
 
 export const UserButton = () => {
   const { data, isLoading } = useGetCurrent();
+  const handleLogout = useLogout();
 
   if (isLoading) {
     <PageLoader />;
@@ -22,7 +23,6 @@ export const UserButton = () => {
   const { user } = data;
 
   const { name, email, profilePic } = user;
-  const handleLogout = useLogout();
 
   return (
     <DropdownMenu>

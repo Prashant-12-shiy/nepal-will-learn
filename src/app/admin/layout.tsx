@@ -1,5 +1,4 @@
 import AdminNavBar from "@/features/admin/auth/components/navbar";
-import { EditCollegeFormWrapper } from "@/features/admin/college/components/edit-college-form-wrapper";
 
 interface AdminLayoutProps {
     children: React.ReactNode;

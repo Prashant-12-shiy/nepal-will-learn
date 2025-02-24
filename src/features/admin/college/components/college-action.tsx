@@ -15,12 +15,14 @@ import { EditCollegeFormWrapper } from "./edit-college-form-wrapper";
 import { ResponsiveModel } from "@/components/responsive-model"; // Import ResponsiveModel
 import { useConfirm } from "@/hooks/use-confirm";
 import { useDeleteCollege } from "../api/use-delete-college";
+import Link from "next/link";
 
 interface CollegeActionProps {
   id: string;
+  collegeSlug: string;
 }
 
-export const CollegeAction = ({ id }: CollegeActionProps) => {
+export const CollegeAction = ({ id, collegeSlug }: CollegeActionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {mutate, isPending} = useDeleteCollege();
@@ -45,9 +47,11 @@ export const CollegeAction = ({ id }: CollegeActionProps) => {
           <MoreVertical className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem className="font-medium p-[10px]">
+          <DropdownMenuItem className="font-medium p-[10px] ">
+            <Link href={`/admin/college/${collegeSlug}`} className="flex items-center gap-2">
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
             College Details
+            </Link>
           </DropdownMenuItem>
           {/* Open Dialog when clicking Edit */}
           <DropdownMenuItem
@@ -70,7 +74,7 @@ export const CollegeAction = ({ id }: CollegeActionProps) => {
 
       {/* Wrap inside ResponsiveModel */}
       <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen}>
-        <EditCollegeFormWrapper id={id} isOpen={isOpen} setIsOpen={setIsOpen} />
+        <EditCollegeFormWrapper slug={collegeSlug} setIsOpen={setIsOpen} />
       </ResponsiveModel>
 
       <ConfirmationDialog/>

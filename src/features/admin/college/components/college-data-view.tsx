@@ -7,6 +7,8 @@ import { PageLoader } from "@/components/page-loader";
 
 const CollegeData = () => {
   const { data, isLoading } = useGetColleges();
+console.log(data);
+  
 
   if (isLoading) {
     return <PageLoader />;

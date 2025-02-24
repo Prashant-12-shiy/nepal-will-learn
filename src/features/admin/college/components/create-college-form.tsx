@@ -26,6 +26,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateCollege } from "../api/use-create-college";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useGetUniversities } from "../../university/api/use-get-universities";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { CollegeData } from "../types";
+import { UniversityData } from "../../university/types";
 
 // Define the form schema using zod
 export const formSchema = z.object({
@@ -75,6 +89,9 @@ export const formSchema = z.object({
 
 export const CreateCollegeForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {data, isLoading} = useGetUniversities();
+
+  const universities: UniversityData[] = data?.university;
   // Initialize the form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,16 +122,36 @@ export const CreateCollegeForm = () => {
     },
   });
 
+
+
   const { mutate, isPending, reset } = useCreateCollege();
 
   // Handle form submission
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(values, {
+      const selectedUniversity = universities.find(
+          (university) => university._id === values.affiliation
+        );
+    
+        if (!selectedUniversity) {
+          console.error("Selected university not found");
+          return;
+        }
+    
+        const updatedValues: CollegeData = {
+          ...values,
+          affiliation: selectedUniversity, // Transform back to UniversityData
+        };
+      
+    mutate(updatedValues, {
       onSuccess: () => {
         reset();
       },
     });
   };
+
+  if(isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -291,18 +328,68 @@ export const CreateCollegeForm = () => {
 
               {/* Affiliation */}
               <FormField
-                control={form.control}
-                name="affiliation"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Affiliation</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter affiliation" {...field} />
-                    </FormControl>
+              control={form.control}
+              name="affiliation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Affiliation</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? universities.find(
+                                (university) => university._id === field.value
+                              )?.name
+                            : "Select University"}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <Command>
+                        <CommandInput placeholder="Seach University..." />
+                        <CommandList>
+                          <CommandEmpty>No university found.</CommandEmpty>
+                          <CommandGroup>
+                            {universities.map((university) => (
+                              <CommandItem
+                                value={university.name}
+                                key={university._id}
+                                onSelect={() =>
+                                  form.setValue(
+                                    "affiliation",
+                                    university._id ?? ""
+                                  )
+                                }
+                              >
+                                {university.name}
+                                <Check
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    university._id === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
                     <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  </Popover>
+                </FormItem>
+              )}
+            />
             </div>
 
             <div className="flex gap-5 *:w-full">

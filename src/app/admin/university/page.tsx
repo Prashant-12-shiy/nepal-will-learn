@@ -17,7 +17,7 @@ const University = () => {
 
 
         <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen}>
-            <CreateUniversityFormWrapper isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <CreateUniversityFormWrapper setIsOpen={setIsOpen}/>
         </ResponsiveModel>
     </div>
   )

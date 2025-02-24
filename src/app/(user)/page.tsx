@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -133,13 +132,13 @@ const Dashboard = () => {
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div className="bg-card p-6 rounded-lg border border-border">
       <p className="text-muted-foreground mb-4">
-        "The courses are so much fun! I never thought learning could be this enjoyable."
+      &quot;The courses are so much fun! I never thought learning could be this enjoyable.&quot;
       </p>
       <p className="font-cartoon text-foreground">- Sarah, Age 10</p>
     </div>
     <div className="bg-card p-6 rounded-lg border border-border">
       <p className="text-muted-foreground mb-4">
-        "The instructors are amazing! They make even the toughest topics easy to understand."
+      &quot;The instructors are amazing! They make even the toughest topics easy to understand.&quot;
       </p>
       <p className="font-cartoon text-foreground">- Jake, Age 12</p>
     </div>
