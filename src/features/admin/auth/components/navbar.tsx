@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React from 'react'
 import { useAdminLogout } from '../api/use-admin-logout';
 
+
 const AdminNavBar = () => {
     const navItems = [
         { name: 'University', href: '/admin/university' },

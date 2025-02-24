@@ -1,7 +1,7 @@
 import axios from "axios";
-import { BASE_URL } from "./auth-endpoint";
+import { BASE_URL } from  "@/lib/endpoint";
 
-import { endpoints } from "./auth-endpoint";
+import { endpoints } from  "@/lib/endpoint";
 import { RegisterData } from "../types";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";

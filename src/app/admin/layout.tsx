@@ -1,4 +1,5 @@
-import AdminNavBar from "@/features/admin/components/navbar";
+import AdminNavBar from "@/features/admin/auth/components/navbar";
+import { EditCollegeFormWrapper } from "@/features/admin/college/components/edit-college-form-wrapper";
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -6,7 +7,7 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({children}: AdminLayoutProps) {
     return (
-        <div>
+        <div className="mx-2">
             <AdminNavBar />
             {children}
         </div>

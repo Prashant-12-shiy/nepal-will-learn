@@ -7,6 +7,7 @@ const axiosInstance = axios.create({
   withCredentials: true, // Send cookies cross-origin
   headers: {
     "Content-Type": "application/json",
+
   },
 });
 
@@ -14,8 +15,11 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Get the token from cookies
     const token = getCookie("nwl-token");
+    const adminToken = getCookie("nwl-admin-token");
 
-    if (token) {
+    if (adminToken) {
+      config.headers["Authorization"] = `Bearer ${adminToken}`;
+    } else if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
 

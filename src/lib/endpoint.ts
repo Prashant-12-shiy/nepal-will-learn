@@ -13,4 +13,16 @@ export const endpoints = {
     forgotPasswordAdmin: "/api/auth/admin/forgot-password",
     resetPasswordAdmin: "/api/auth/admin/reset-password/",
     getCurrentAdmin: "/api/auth/admin/get-current",
+
+    createCollege: '/api/nwl/admin/create-college',
+    getColleges: '/api/nwl/admin/get-colleges',
+    getCollegeById: '/api/nwl/admin/get-college/',
+    updateCollege: '/api/nwl/admin/update-college/',
+    deleteCollege: '/api/nwl/admin/delete-college/',
+
+    createUniversity: '/api/nwl/admin/create-university',
+    getUniversities: '/api/nwl/admin/get-universities',
+    getUniversityById: '/api/nwl/admin/get-university/',
+    updateUniversity: '/api/nwl/admin/update-university/',
+    deleteUniversity: '/api/nwl/admin/delete-university/',
 }

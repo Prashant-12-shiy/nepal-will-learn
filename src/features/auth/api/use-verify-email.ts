@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, endpoints } from "./auth-endpoint";
+import { BASE_URL, endpoints } from  "@/lib/endpoint";
 import { VerifyEmailData } from "../types";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useMutation } from "@tanstack/react-query";

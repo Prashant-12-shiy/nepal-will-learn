@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axiosInstance";
-import { endpoints } from "./auth-endpoint";
+import { endpoints } from  "@/lib/endpoint";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useQuery } from "@tanstack/react-query";
 
