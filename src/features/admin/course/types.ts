@@ -1,3 +1,4 @@
+import { SemesterData } from "../semester/types";
 import { UniversityData } from "../university/types";
 
 export interface CourseData {
@@ -8,6 +9,7 @@ export interface CourseData {
     description: string;
     duration: number;
     semester: number;
+    semestersDetails?: SemesterData[],
     fees?: string;
     level: 'Beginner' | 'Intermediate' | 'Advanced',
     prerequisites?: string[];

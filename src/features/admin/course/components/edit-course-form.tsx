@@ -75,7 +75,7 @@ export const EditCourseForm = ({
     },
   });
 
-  const { mutate, isPending } = useUdpateCourse();
+  const { mutate, isPending } = useUdpateCourse(collegeId);
 
 
   // Handle form submission

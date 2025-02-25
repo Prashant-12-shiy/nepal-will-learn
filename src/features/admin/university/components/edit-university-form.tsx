@@ -57,7 +57,7 @@ export const EditUniversityForm = ({
     defaultValues: initialValues
   });
 
-  const { mutate, isPending, reset } = useUdpateUniversity();
+  const { mutate, isPending, reset } = useUdpateUniversity(universityId);
 
 
   // Handle form submission

@@ -6,7 +6,7 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({children}: AdminLayoutProps) {
     return (
-        <div className="mx-2">
+        <div className="px-2">
             <AdminNavBar />
             {children}
         </div>

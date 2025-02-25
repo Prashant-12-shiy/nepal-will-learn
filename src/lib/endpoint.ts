@@ -34,4 +34,6 @@ export const endpoints = {
     getCourseBySlug: '/api/nwl/admin/get-course-slug/',
     deleteCourse: '/api/nwl/admin/delete-course/',
     updateCourse: '/api/nwl/admin/update-course/',
+
+    createSemester: '/api/nwl/admin/create-semester',
 }

@@ -1,13 +1,13 @@
 import axiosInstance from "@/lib/axiosInstance";
-import { CourseData } from "../types";
+import {  SemesterData } from "../types";
 import { endpoints } from "@/lib/endpoint";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const updateCourse = async ({data, id}: {data: CourseData, id: string}) => {
+const createSemester = async (data: SemesterData) => {
   try {
-    const response = await axiosInstance.post(endpoints.updateCourse + id, data);
+    const response = await axiosInstance.post(endpoints.createSemester, data);
 
     return response.data;
   } catch (error) {
@@ -16,16 +16,14 @@ const updateCourse = async ({data, id}: {data: CourseData, id: string}) => {
   }
 };
 
-export const useUdpateCourse = (id?: string) => {
+export const useCreateSemester = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updateCourse,
+    mutationFn: createSemester,
     onSuccess: () => {
-      toast.success("Course updated successfully");
+      toast.success("Semester created successfully");
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      if (id) {
-        queryClient.invalidateQueries({ queryKey: ["course", id] });
-      }
+      queryClient.invalidateQueries({ queryKey: ["semesters"] });
     },
     onError: (error) => {
       toast.error(error.message);
