@@ -1,29 +1,35 @@
-"use client"
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react'
-import { useAdminLogout } from '../api/use-admin-logout';
-
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { useAdminLogout } from "../api/use-admin-logout";
 
 const AdminNavBar = () => {
-    const navItems = [
-        { name: 'University', href: '/admin/university' },
-        { name: 'Notices', href: '/admin/notices' },
-        { name: 'Course', href: '/admin/course' },
-        { name: 'Event', href: '/admin/event' },
-        { name: 'College', href: '/admin/college' },
-        { name: 'Category', href: '/admin/category' },
-      ];
+  const navItems = [
+    { name: "University", href: "/admin/university" },
+    { name: "Notices", href: "/admin/notices" },
+    { name: "Course", href: "/admin/course" },
+    { name: "Event", href: "/admin/event" },
+    { name: "College", href: "/admin/college" },
+    { name: "Category", href: "/admin/category" },
+  ];
 
-    const logout = useAdminLogout();
+  const logout = useAdminLogout();
 
   return (
-      <nav className=" text-black border-b border-black p-4">
+    <nav className=" text-black border-b border-black p-4">
       {/* Desktop Navbar */}
       <div className="hidden md:flex justify-between items-center">
-        <div className="font-bold text-xl">Admin Dashboard</div>
+        <div className="font-bold text-xl">
+          <Link href={`/admin`}>Admin Dashboard</Link>
+        </div>
         <ul className="flex space-x-6">
           {navItems.map((item, index) => (
             <li key={index}>
@@ -34,8 +40,8 @@ const AdminNavBar = () => {
           ))}
         </ul>
         <div>
-        <Button onClick={logout}>Logout</Button>
-      </div>
+          <Button onClick={logout}>Logout</Button>
+        </div>
       </div>
 
       {/* Mobile Navbar */}
@@ -52,7 +58,10 @@ const AdminNavBar = () => {
               {navItems.map((item, index) => (
                 <li key={index}>
                   <SheetClose asChild>
-                    <Link href={item.href} className="block hover:text-gray-400">
+                    <Link
+                      href={item.href}
+                      className="block hover:text-gray-400"
+                    >
                       {item.name}
                     </Link>
                   </SheetClose>
@@ -63,10 +72,8 @@ const AdminNavBar = () => {
           </SheetContent>
         </Sheet>
       </div>
-    
-
     </nav>
-  )
-}
+  );
+};
 
-export default AdminNavBar
+export default AdminNavBar;

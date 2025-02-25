@@ -9,29 +9,30 @@ import {
   MoreVertical,
   TrashIcon,
   PencilIcon,
-  Plus,
 } from "lucide-react";
 import { useState } from "react";
-import { EditCollegeFormWrapper } from "./edit-college-form-wrapper";
+// import { EditcourseFormWrapper } from "./edit-course-form-wrapper";
 import { ResponsiveModel } from "@/components/responsive-model"; // Import ResponsiveModel
 import { useConfirm } from "@/hooks/use-confirm";
-import { useDeleteCollege } from "../api/use-delete-college";
 import Link from "next/link";
-import { AddCourseToCollege } from "./add-collegeCourse";
+// import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { useDeleteCourse } from "../api/use-delete-course";
+import { EditCourseFormWrapper } from "./edit-course-form-wrapper";
+// import { AddCourseTocourse } from "./add-courseCourse";
 
-interface CollegeActionProps {
+interface CourseActionProps {
   id: string;
-  collegeSlug: string;
+  courseSlug: string;
 }
 
-export const CollegeAction = ({ id, collegeSlug }: CollegeActionProps) => {
+export const CourseAction = ({ id, courseSlug }: CourseActionProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenAddCourse, setIsOpenAddCourse] = useState(false);
-  const { mutate, isPending } = useDeleteCollege();
+  // const [isOpenAddCourse, setIsOpenAddCourse] = useState(false);
+  const { mutate, isPending } = useDeleteCourse();
 
   const [ConfirmationDialog, confirm] = useConfirm(
-    "Delete College",
-    "Are you sure you want to delete this college?",
+    "Delete course",
+    "Are you sure you want to delete this course?",
     "destructive"
   );
   
@@ -52,11 +53,11 @@ export const CollegeAction = ({ id, collegeSlug }: CollegeActionProps) => {
         <DropdownMenuContent align="end">
           <DropdownMenuItem className="font-medium p-[10px] ">
             <Link
-              href={`/admin/college/${collegeSlug}`}
+              href={`/admin/course/${courseSlug}`}
               className="flex items-center gap-2"
             >
               <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
-              College Details
+              Course Details
             </Link>
           </DropdownMenuItem>
           {/* Open Dialog when clicking Edit */}
@@ -65,14 +66,7 @@ export const CollegeAction = ({ id, collegeSlug }: CollegeActionProps) => {
             onSelect={() => setIsOpen(true)}
           >
             <PencilIcon className="size-4 mr-2 stroke-2" />
-            Edit College
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="font-medium p-[10px]"
-            onSelect={() => setIsOpenAddCourse(true)}
-          >
-            <Plus className="size-4 mr-2 stroke-2" />
-            Add Course
+            Edit Course
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleDelete}
@@ -80,25 +74,26 @@ export const CollegeAction = ({ id, collegeSlug }: CollegeActionProps) => {
             className="text-amber-700 focus:text-amber-700 font-medium p-[10px] hover:bg-red-700"
           >
             <TrashIcon className="size-4 mr-2 stroke-2" />
-            Delete College
+            Delete Course
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
       {/* Wrap inside ResponsiveModel */}
       <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[75vw]">
-        <EditCollegeFormWrapper slug={collegeSlug} setIsOpen={setIsOpen} />
+        <EditCourseFormWrapper id={id} setIsOpen={setIsOpen} />
       </ResponsiveModel>
 
 
-      {isOpenAddCourse && (
+      {/* {isOpenAddCourse && (
         <ResponsiveModel isOpen={isOpenAddCourse} setIsOpen={setIsOpenAddCourse} className="max-w-lg">
-          <AddCourseToCollege
+          <AddCourseTocourse
+            isOpen={isOpenAddCourse}
             setIsOpen={setIsOpenAddCourse}
-            collegeId={id}
+            courseId={id}
           />
         </ResponsiveModel>
-      )}
+      )} */}
 
       <ConfirmationDialog />
     </>

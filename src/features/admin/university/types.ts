@@ -1,6 +1,7 @@
 export interface UniversityData {
     _id?: string;
     name: string;
+    slug?: string;
     location: string;
     establishedYear: number;
     description: string;

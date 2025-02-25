@@ -1,3 +1,4 @@
+import { CourseData } from "../course/types";
 import { UniversityData } from "../university/types";
 
 export interface CollegeData {
@@ -6,7 +7,7 @@ export interface CollegeData {
     slug?: string;
     location: string;
     establishedYear: number;
-    courses: string[];
+    courses?: CourseData[];
     facilities: string[];
     email?: string;
     phone?: string;

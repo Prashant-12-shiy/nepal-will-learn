@@ -2,9 +2,11 @@
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from "@/components/ui/button";
+import { UniversityData } from "@/features/admin/university/types";
+
 import {
   DialogClose,
   DialogHeader,
@@ -18,19 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { formSchema } from "./create-college-form";
-import { CollegeData } from "../types";
-import { useUdpateCollege } from "../api/use-update-college";
-import { UniversityData } from "../../university/types";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -39,6 +28,24 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+
+import { cn } from "@/lib/utils";
+
+import { formSchema } from "./create-college-form";
+
+import { CollegeData } from "../types";
+import { useUdpateCollege } from "../api/use-update-college";
+
+
+
 
 interface EditCollegeFormProps {
   universities: UniversityData[];
@@ -51,20 +58,19 @@ export const EditCollegeForm = ({
   initialValues,
   onCancel,
 }: EditCollegeFormProps) => {
-  const collegeId = initialValues._id ?? " ";
-
-  console.log(universities);
+  const collegeId = initialValues?._id ?? " ";
+  
 
   // Initialize the form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...initialValues,
-      affiliation: initialValues.affiliation._id,
+      affiliation: initialValues?.affiliation?._id ?? "", 
     },
   });
 
-  const { mutate, isPending, reset } = useUdpateCollege();
+  const { mutate, isPending } = useUdpateCollege();
 
 
   // Handle form submission
@@ -87,7 +93,6 @@ export const EditCollegeForm = ({
       { data: updatedValues, id: collegeId },
       {
         onSuccess: () => {
-          reset();
           onCancel();
         },
       }
@@ -157,7 +162,7 @@ export const EditCollegeForm = ({
           </div>
 
           {/* Courses */}
-          <FormField
+          {/* <FormField
             control={form.control}
             name="courses"
             render={({ field }) => (
@@ -173,7 +178,7 @@ export const EditCollegeForm = ({
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           {/* Facilities */}
           <FormField

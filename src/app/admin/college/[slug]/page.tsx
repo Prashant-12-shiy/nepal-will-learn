@@ -8,6 +8,7 @@ import Link from "next/link";
 import { PageLoader } from "@/components/page-loader";
 import { cn } from "@/lib/utils";
 import { CollegeData } from "@/features/admin/college/types";
+import { CourseData } from "@/features/admin/course/types";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -96,7 +97,7 @@ const CollegePage = ({ params }: { params: { slug: string } }) => {
             {/* Right Column */}
             <motion.div variants={containerVariants} className="space-y-6">
               <MotionInfoCard label="Email" value={college?.email} />
-              <MotionInfoCard label="Courses" value={<ListItems items={college?.courses} />} />
+              <MotionInfoCard label="Courses" value={<ListItems items={college?.courses?.map((course: CourseData) => course.name)} />} />
               <MotionInfoCard label="Facilities" value={<ListItems items={college?.facilities} />} />
               <MotionInfoCard
                 label="Social Links"

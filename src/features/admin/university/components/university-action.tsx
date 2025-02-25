@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import {
   ExternalLinkIcon,
@@ -18,13 +19,15 @@ import {
 
 import { EditUniversityFormWrapper } from "./edit-university-form-wrapper";
 import { useDeleteUniversity } from "../api/use-delete-university";
+import Link from "next/link";
 
 
 interface CollegeActionProps {
+  slug: string;
   id: string;
 }
 
-export const UniversityAction = ({ id }: CollegeActionProps) => {
+export const UniversityAction = ({ id, slug }: CollegeActionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {mutate, isPending} = useDeleteUniversity();
@@ -49,9 +52,11 @@ export const UniversityAction = ({ id }: CollegeActionProps) => {
           <MoreVertical className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem className="font-medium p-[10px]">
+          <DropdownMenuItem className="font-medium p-[10px] " >
+            <Link href={`/admin/university/${slug}`} className="flex gap-2">
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
             University Details
+            </Link>
           </DropdownMenuItem>
           {/* Open Dialog when clicking Edit */}
           <DropdownMenuItem
@@ -73,7 +78,7 @@ export const UniversityAction = ({ id }: CollegeActionProps) => {
       </DropdownMenu>
 
       {/* Wrap inside ResponsiveModel */}
-      <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen}>
+      <ResponsiveModel isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[75vw]">
         <EditUniversityFormWrapper id={id} setIsOpen={setIsOpen} />
       </ResponsiveModel>
 

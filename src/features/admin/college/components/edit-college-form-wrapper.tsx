@@ -17,6 +17,7 @@ export const EditCollegeFormWrapper = ({
   const { data: collegeData, isLoading: isLoadingColleges } = useGetCollegeBySlug(slug);
   const {data: univeristiesData, isLoading: isLoadingUniveristies} = useGetUniversities(); 
   const initialValues = collegeData?.college;
+  
   const univeristies = univeristiesData?.university;
 
   const isLoading = isLoadingColleges || isLoadingUniveristies;

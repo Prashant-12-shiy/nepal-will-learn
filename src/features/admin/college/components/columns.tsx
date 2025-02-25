@@ -62,14 +62,14 @@ export const columns: ColumnDef<CollegeData>[] = [
       return <p className="flex items-center justify-center">{establishedYear}</p>;
     },
   },
-  {
-    accessorKey: "courses",
-    header: "Courses",
-    cell: ({ row }) => {
-      const courses = row.original.courses.join(", ");
-      return <p className="line-clamp-2">{courses}</p>;
-    },
-  },
+  // {
+  //   accessorKey: "courses",
+  //   header: "Courses",
+  //   cell: ({ row }) => {
+  //     const courses = row.original.courses.join(", ");
+  //     return <p className="line-clamp-2">{courses}</p>;
+  //   },
+  // },
   {
     accessorKey: "email",
     header: "Email",

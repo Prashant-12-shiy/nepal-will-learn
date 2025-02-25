@@ -109,9 +109,10 @@ export const columns: ColumnDef<UniversityData>[] = [
     id: "actions",
     cell: ({row}) => {
       const id = row.original._id;
+      const slug = row.original.slug;
 
       return (
-        <UniversityAction id={id ?? ""}/>
+        <UniversityAction id={id ?? ""} slug={slug ?? ""}/>
       )
     }
   }

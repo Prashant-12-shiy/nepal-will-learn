@@ -39,7 +39,7 @@ export const useConfirm = (
     };
 
     const ConfirmationDialog = () => (
-      <ResponsiveModel isOpen={promise !== null} setIsOpen={handleClose}>
+      <ResponsiveModel isOpen={promise !== null} setIsOpen={handleClose} className="max-w-[45vw]">
         <Card className="w-full h-full border-none shadow-none">
           <CardContent className="pt-8">
             <CardHeader className="p-0">
