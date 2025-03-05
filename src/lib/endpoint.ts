@@ -1,6 +1,8 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export const endpoints = {
+    generateSignature: "/api/nwl/generate-signature",
+
     register: "/api/auth/sign-up",
     login: "/api/auth/login",
     verifyEmail: "/api/auth/verify-email",

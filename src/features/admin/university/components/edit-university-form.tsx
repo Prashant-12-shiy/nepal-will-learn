@@ -5,11 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  DialogClose,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -45,6 +41,52 @@ interface EditUniversityFormProps {
   onCancel: () => void;
 }
 
+export const EditUniversityFormSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  location: z.string().min(1, "Location is required"),
+  establishedYear: z
+    .number()
+    .min(1800, "Established year must be a valid year"),
+  courses: z.array(z.string()).optional(),
+  facilities: z.array(z.string()).optional(),
+  email: z.string().email("Invalid email").optional(),
+  phone: z.string().optional(),
+  website: z.string().url("Invalid URL").optional(),
+  accreditation: z.string().optional(),
+  totalStudents: z
+    .number()
+    .min(0, "Total students must be a positive number")
+    .optional(),
+  totalFaculty: z
+    .number()
+    .min(0, "Total faculty must be a positive number")
+    .optional(),
+  campusArea: z
+    .number()
+    .min(0, "Campus area must be a positive number")
+    .optional(),
+  libraries: z
+    .number()
+    .min(0, "Number of libraries must be a positive number")
+    .optional(),
+  labs: z
+    .number()
+    .min(0, "Number of labs must be a positive number")
+    .optional(),
+  hostels: z.number().min(0, "Number of hostels must be a positive number"),
+  facebook: z.string().url("Invalid URL").or(z.literal("")).optional(),
+  twitter: z.string().url("Invalid URL").or(z.literal("")).optional(),
+  linkedin: z.string().url("Invalid URL").or(z.literal("")).optional(),
+  instagram: z.string().url("Invalid URL").or(z.literal("")).optional(),
+  description: z.string().min(1, "Description is required"),
+  // logo: z.array(z.instanceof(File)).optional(),
+  // images: z
+  // .array(z.instanceof(File))
+  // .max(10, { message: "You can upload a maximum of 5 images" }) // Array of files for images
+  // .optional(),
+});
+
+
 export const EditUniversityForm = ({
   initialValues,
   onCancel,
@@ -52,16 +94,15 @@ export const EditUniversityForm = ({
   const universityId = initialValues._id ?? " ";
 
   // Initialize the form
-  const form = useForm<z.infer<typeof universityFormSchema>>({
+  const form = useForm<z.infer<typeof EditUniversityFormSchema>>({
     resolver: zodResolver(universityFormSchema),
     defaultValues: initialValues
   });
 
   const { mutate, isPending, reset } = useUdpateUniversity(universityId);
 
-
   // Handle form submission
-  const onSubmit = (values: z.infer<typeof universityFormSchema>) => {
+  const onSubmit = (values: z.infer<typeof EditUniversityFormSchema>) => {
     // const selectedUniversity = universities.find(
     //   (university) => university._id === values.affiliation
     // );
@@ -75,7 +116,7 @@ export const EditUniversityForm = ({
     //   ...values,
     //   affiliation: selectedUniversity, // Transform back to UniversityData
     // };
-  
+
     mutate(
       { data: values, id: universityId },
       {
@@ -517,43 +558,6 @@ export const EditUniversityForm = ({
             )}
           />
 
-          <div className="flex flex-col sm:flex-row gap-5 *:w-full">
-            {/* Logo */}
-            <FormField
-              control={form.control}
-              name="logo"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Logo URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter logo URL" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Images */}
-            <FormField
-              control={form.control}
-              name="images"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image URLs (comma-separated)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter image URLs (comma-separated)"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <div className="flex items-center justify-between *:w-full gap-7">
             <Button disabled={isPending} type="submit" variant="secondary">
               Submit

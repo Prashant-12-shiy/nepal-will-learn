@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { UniversityAction } from "./university-action";
+import Image from "next/image";
 
 export const columns: ColumnDef<UniversityData>[] = [
   {
@@ -27,6 +28,24 @@ export const columns: ColumnDef<UniversityData>[] = [
     },
   },
   {
+    accessorKey: "logo",
+    header: () => {
+      return <Button variant="ghost">Logo</Button>;
+    },
+    cell: ({ row }) => {
+      const logo = row.original.logo;
+      return (
+        <Image
+          src={logo as string}
+          alt="logo"
+          className="text-xs flex items-center justify-center"
+          width={30}
+          height={30}
+        />
+      );
+    },
+  },
+  {
     accessorKey: "location",
     header: ({ column }) => {
       return (
@@ -44,6 +63,7 @@ export const columns: ColumnDef<UniversityData>[] = [
       return <p>{location}</p>;
     },
   },
+
   {
     accessorKey: "establishedYear",
     header: ({ column }) => {
@@ -59,7 +79,9 @@ export const columns: ColumnDef<UniversityData>[] = [
     },
     cell: ({ row }) => {
       const establishedYear = row.original.establishedYear;
-      return <p className="flex items-center justify-center">{establishedYear}</p>;
+      return (
+        <p className="flex items-center justify-center">{establishedYear}</p>
+      );
     },
   },
   // {
@@ -93,27 +115,25 @@ export const columns: ColumnDef<UniversityData>[] = [
       const website = row.original.website;
       return (
         <p className="truncate max-w-16">
-        <Link
-          href={website || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          {website || "-"}
-        </Link>
+          <Link
+            href={website || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            {website || "-"}
+          </Link>
         </p>
       );
     },
   },
   {
     id: "actions",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const id = row.original._id;
       const slug = row.original.slug;
 
-      return (
-        <UniversityAction id={id ?? ""} slug={slug ?? ""}/>
-      )
-    }
-  }
+      return <UniversityAction id={id ?? ""} slug={slug ?? ""} />;
+    },
+  },
 ];

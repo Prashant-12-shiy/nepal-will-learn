@@ -5,9 +5,18 @@ import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const updateUniversity = async ({data, id}: {data: UniversityData, id: string}) => {
+const updateUniversity = async ({
+  data,
+  id,
+}: {
+  data: UniversityData;
+  id: string;
+}) => {
   try {
-    const response = await axiosInstance.post(endpoints.updateUniversity + id, data);
+    const response = await axiosInstance.post(
+      endpoints.updateUniversity + id,
+      data
+    );
 
     return response.data;
   } catch (error) {
@@ -23,7 +32,7 @@ export const useUdpateUniversity = (id?: string) => {
     onSuccess: () => {
       toast.success("University updated successfully");
       queryClient.invalidateQueries({ queryKey: ["universities"] });
-      if(id) {
+      if (id) {
         queryClient.invalidateQueries({ queryKey: ["university", id] });
       }
     },

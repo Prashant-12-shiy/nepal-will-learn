@@ -13,6 +13,7 @@ const DashBoard = () => {
           <TabsTrigger value='university'>University</TabsTrigger>
           <TabsTrigger value='course'>Course</TabsTrigger>
           <TabsTrigger value='college'>College</TabsTrigger>
+          <TabsTrigger value='notice'>Notice</TabsTrigger>
         </TabsList>
         <Separator className='my-4'/>
         <TabsContent value='university'>
@@ -26,6 +27,12 @@ const DashBoard = () => {
         <TabsContent value='college'>
           <AdminCollege/>
         </TabsContent>
+
+        <TabsContent value='notice'>
+          {/* Add Notice Page */}
+        </TabsContent>
+
+        
       </Tabs>
     </div>
   )
