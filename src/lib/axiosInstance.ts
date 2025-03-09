@@ -7,7 +7,6 @@ const axiosInstance = axios.create({
   withCredentials: true, // Send cookies cross-origin
   headers: {
     "Content-Type": "application/json",
-
   },
 });
 

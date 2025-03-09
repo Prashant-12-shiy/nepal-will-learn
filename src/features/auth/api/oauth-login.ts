@@ -1,3 +1,6 @@
+// import { endpoints } from "@/lib/endpoint";
+
+// const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT
 export const useGoogleLogin = () => {
     const loginWithGoogle = () => {
       try {

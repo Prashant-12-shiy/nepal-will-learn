@@ -11,6 +11,8 @@ interface CourseSemesterCardProps {
 }
 
 const CourseSemesterCard = ({ semesterData }: CourseSemesterCardProps) => {
+  console.log(semesterData);
+  
   return (
     <div className="space-y-6">
       {semesterData.map((semester) => (
@@ -36,7 +38,7 @@ const CourseSemesterCard = ({ semesterData }: CourseSemesterCardProps) => {
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <Link
-                      href={`/subjects/${subject._id}`}
+                      href={`/admin/subject/${subject.slug}`}
                       className="block p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 transition-colors"
                     >
                       <div className="block *:mt-2 md:*:mt-0 md:flex justify-between items-center">

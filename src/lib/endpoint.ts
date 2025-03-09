@@ -38,4 +38,11 @@ export const endpoints = {
     updateCourse: '/api/nwl/admin/update-course/',
 
     createSemester: '/api/nwl/admin/create-semester',
+
+    getSubject: '/api/nwl/get-subject/',
+
+    createNote: 'api/nwl/admin/create-note',
+    getNotes: 'api/nwl/get-note/',
+    updateNote: 'api/nwl/admin/update-note',
+    deleteNote: 'api/nwl/admin/delete-note',
 }
